@@ -20,55 +20,9 @@ const io = require('socket.io')(server, {
     }
 });
 
-const { new_database_connection, close_database_connection } = require('./src/database_connection.js');
-
+const {route_create_user}=require('./src/routes.js');
 app.use(express.static('public'));
-app.post('/api/create_user/', async (req, res) => {
-    const mongo_connection = await new_database_connection();
-    
-    const username = req.body.username;
-    const password = req.body.password;
-    // console.log(req.headers);
-    const db = mongo_connection.db('database-app');
-    db.collection('users').findOne(
-        {
-            'username': username
-        }
-    )
-        .then(
-            (user) => {//callback//
-                if (user) {
-                    console.log(`Username "${username}" already exists`);
-                    res.status(409).send('Username already exists');
-                    close_database_connection(mongo_connection);
-                   
-                } else {
-                    db.collection('users').insertOne(
-                        {
-                            username: username,
-                            password: password
-                        })
-                        .then(
-                            (err, result) => {
-                                if (err) {
-                                    console.error(err);
-                                    res.status(500).send('Error creating user');
-                                    close_database_connection(mongo_connection);
-                                   
-                                } else {
-                                    console.log(`User "${username}" created`);
-                                    res.status(201).send('User created successfully');
-                                    close_database_connection(mongo_connection);
-                            }
-                        });
-
-                        
-                }
-            }
-        );
-        
-
-});
+app.post('/api/create_user/', (req,res)=>route_create_user(req,res));
 
 
 server.listen(port, () => {

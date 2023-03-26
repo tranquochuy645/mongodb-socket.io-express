@@ -13,7 +13,7 @@ async function new_database_connection() {
   } catch (error) {
     console.error(error);
   }
-}
+};
 function close_database_connection(cli) {
     cli.close();
     console.log('closed_a_db_connection');
