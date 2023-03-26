@@ -3,10 +3,10 @@ const fs = require("fs");
 const bodyParser = require('body-parser');
 
 const port = process.env.PORT;
-const mongo_uri = process.env.MONGO_URI;
-const { MongoClient, ObjectId } = require('mongodb');
+// const mongo_uri = process.env.MONGO_URI;
+// const { MongoClient, ObjectId } = require('mongodb');
 const express = require('express');
-const { dirname } = require('path');
+// const { dirname } = require('path');
 
 const app = express();
 // Use body-parser middleware to parse request bodies
@@ -20,23 +20,7 @@ const io = require('socket.io')(server, {
     }
 });
 
-async function new_database_connection() {
-    const mongo_client = new MongoClient(mongo_uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
-    try {
-        await mongo_client.connect();
-        console.log('created_a_db_connection');
-        return mongo_client;
-
-
-    } catch (error) {
-        console.error(error);
-    }
-};
-function close_database_connection(cli) {
-    cli.close();
-    console.log('closed_a_db_connection');
-};
+const { new_database_connection, close_database_connection } = require('./src/database_connection.js');
 
 app.use(express.static('public'));
 app.post('/api/create_user/', async (req, res) => {
