@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+</head>
+
+<body>
+    <h1>Login</h1>
+    <form id="login-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+
+        <button type="submit">Login</button>
+    </form>
+    <button onclick="location.href='/register';">Don't have an account? Register here</button>
+
+    <script>
+        const loginForm = document.querySelector('#login-form');
+
+        loginForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const username = loginForm.elements.username.value;
+            const password = loginForm.elements.password.value;
+
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+					'Content-Type': 'application/json'
+				},
+                body: JSON.stringify({
+                    'username': username,
+                    'password': password
+                })
+            });
+
+            if (response.ok) {
+                alert('Login successfull');
+                response.text().then(token => {
+                    // console.log(token)
+                    location.href = `/dashboard?token=${token}`;
+                });
+                
+                // Redirect to home page, for example
+            } else {
+                response.text().then(data => {
+                    alert(data)
+                })
+            }
+        });
+    </script>
+</body>
+
+</html>

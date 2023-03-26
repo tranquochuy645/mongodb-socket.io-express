@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick='logout()'>Logout</button>
+    <div id="user_data"></div>
+    <script>
+        let token = null;
+        const searchParams = new URLSearchParams(window.location.search);
+        token = searchParams.get('token');
+        // console.log(token);
+
+        if (token != null) {
+            fetch('/api/get_data',
+                {
+                    method: 'GET',
+
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'token':token
+                    }
+                     // Send form data in request body
+                }).then((response) => {
+                    if (response.ok) {
+                        response.json().then(data => {
+                            console.log(data);
+                            var stringggg =JSON.stringify(data,null,2);
+                            // let node = document.createElement("node");
+                            document.getElementById('user_data').innerHTML = stringggg;
+                        });
+
+                    } else (
+                        alert(response.status)
+                    )
+                });
+            function logout() {
+                console.log(token);
+
+                fetch('/api/login',
+                    {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'token':token
+                        }
+                        // Send form data in request body
+                    }).then((response) => {
+                        if (response.ok) {
+                            
+                            alert(response.status);
+                            location.href = '/login';
+
+                        } else (
+                            alert(response.status)
+                        )
+                    });
+            }
+        };
+    </script>
+    
+</body>
+
+</html>

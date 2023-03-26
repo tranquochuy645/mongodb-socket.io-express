@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Register</title>
+</head>
+
+<body>
+	<h1>Register</h1>
+	<form id="register-form">
+		<label for="username">Username:</label>
+		<input type="text" id="username" name="username"><br><br>
+		<label for="password">Password:</label>
+		<input type="password" id="password" name="password"><br><br>
+		<input type="submit" value="Register">
+	</form>
+	<button onclick="location.href='/login';">Already have an account? Login here.</button>
+	<script>
+		document.getElementById("register-form").addEventListener("submit", function (event) {
+			event.preventDefault(); // Prevent default form submission
+			const username = document.getElementById('username').value; // Get form data
+			const password = document.getElementById('username').value;
+
+			fetch('/api/create_user', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					'username': username,
+					'password': password
+				}) // Send form data in request body
+			})
+				.then(response => {
+					if (response.ok) {
+						response.text().then(data => {
+							alert(data);
+							window.location.href = "/login";
+							// Redirect to login page
+						});
+						 
+					} else {
+						response.text().then(data => {
+							alert(data);
+						})
+					}
+				})
+				.catch(error => console.error(error));
+		});
+	</script>
+</body>
+
+</html>
