@@ -13,7 +13,7 @@
     <div id="lightbulb" style="border-radius:50%;border:solid black;background-color: grey; width: 100px;height:100px;" ></div>
     <script>
         const lightbulb=document.getElementById('lightbulb');
-        const socket = io('http://localhost:8080');
+        const socket = io(window.location.hostname);
         socket.emit('toDatabase',{
             id:"642135fad6d53079497933c3",
             data:JSON.stringify({"huy":"cac"})
