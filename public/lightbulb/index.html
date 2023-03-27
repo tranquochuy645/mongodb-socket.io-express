@@ -20,7 +20,7 @@
         
         socket.on("connect", () => {
             const today= new Date;
-            socket.emit('toDatabase', {
+            socket.emit('toMyDatabase', {
                 id: "642135fad6d53079497933c3",
                 data: JSON.stringify({ "weblightbulb_last_emit": `${today}` })
             }
