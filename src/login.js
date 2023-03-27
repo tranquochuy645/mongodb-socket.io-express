@@ -1,4 +1,3 @@
-const { new_database_connection, close_database_connection } = require('./database_connection.js');
 
 function removeDuplicates(arr) {
     /*

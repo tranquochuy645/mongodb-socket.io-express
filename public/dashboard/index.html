@@ -21,7 +21,7 @@
         integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
         crossorigin="anonymous"></script>
     <script>
-        const socket = io('http://localhost:8080');
+        const socket = io(window.location.hostname);
         socket.on('status',
             message => {
 
