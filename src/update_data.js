@@ -13,7 +13,7 @@ async function update_user_database(id, objectData, method = 'set') {
                         $set: objectData
                     }
                 );
-        }
+        };
         if (method == 'push') {
             var o_id = new ObjectId(id);
             global.mongo_connection
@@ -25,7 +25,7 @@ async function update_user_database(id, objectData, method = 'set') {
                         $push: objectData
                     }
                 );
-        }
+        };
         if (method == 'addToSet') {
             global.mongo_connection
                 .db('database-app')
@@ -36,8 +36,8 @@ async function update_user_database(id, objectData, method = 'set') {
                         $addToSet: objectData
                     }
                 );
-        }
-        if (method = 'pull') {
+        };
+        if (method == 'pull') {
             global.mongo_connection
                 .db('database-app')
                 .collection('user_database')
@@ -47,12 +47,12 @@ async function update_user_database(id, objectData, method = 'set') {
                         $pull: objectData
                     }
                 );
-        }
+        };
 
         // close_database_connection(mongo_connection);
 
 
-    } catch (errror) {
+    } catch (error) {
         console.log(error);
 
     }
@@ -95,6 +95,7 @@ async function update_user(id, objectData, method = 'set') {
                 );
         };
         if (method == 'pull') {
+            console.log('pullll');
             global.mongo_connection
                 .db('database-app')
                 .collection('users')
@@ -109,7 +110,7 @@ async function update_user(id, objectData, method = 'set') {
         // close_database_connection(mongo_connection);
 
 
-    } catch (errror) {
+    } catch (error) {
         console.log(error);
 
     }

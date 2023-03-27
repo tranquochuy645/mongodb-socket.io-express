@@ -59,14 +59,15 @@ async function run() {
                     var dataToAdd = `{"devices":"${socket.id}"}`;
                     dataToAdd = JSON.parse(dataToAdd);
                     update_user(message.token, dataToAdd, 'addToSet');
-                    //add the id to devices on first toDatabase emit
-                    update_user_database(message.token, message.data,message.method);
+                    console.log('bug here');
+                    //add the id to devices on first toMyDatabase emit
+                    update_user_database(message.token, message.data , message.method);
                     socket.emit('status', 'Success');
                     socket.on('disconnect', () => {
                         update_user(message.token, dataToAdd, 'pull');
                         //remove the id from devices when disconnect
                     }
-                    )
+                    );
                 } catch (err) {
                     console.log(err)
                     socket.emit('status', 'Failed to parse Json object')

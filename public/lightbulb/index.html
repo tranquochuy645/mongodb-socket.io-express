@@ -16,7 +16,8 @@
     </div>
     <script>
         const lightbulb = document.getElementById('lightbulb');
-        const socket = io(window.location.hostname);
+        // const socket = io(window.location.hostname);
+        const socket=io('http://localhost:8080/');
         
         socket.on("connect", () => {
             const today= new Date;
