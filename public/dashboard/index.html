@@ -14,24 +14,21 @@
     <div id="json-data"></div>
     <h1>Your online devices:</h1>
     <div id="json-data-devices"></div>
-    <p>First text input: Type "toMyDatabase" or "toSocketId" </p>
-    <p> "toMyDatabase" ===> update a child.value in your database</p>
-    <p> "toSocketId" ===> emit a message to ONE specific socketId</p>
-    <p>Second text input: Method to do with your data, leave this empty if using "toSocketId"</p>
-    <p>Third text input:</p>
-    <p>"toMyDatabase" ===> input jsondata string</p>
-    <p>For example: {"led1":"on"} ** use  "  instead of  ' </p>
-    <p>"toSocketId" ===> input a deviceId and your message , separated by "," </p>
-    <p>For example: salfhli238y98whsaf , someMessage</p>
     <div style="display:flex;">
-        <p>socket.emit( '</p>
-        <input type="text" id="command" style="height: 20px;margin-top:10px;margin-left:5px;margin-right:5px;" placeholder="toMyDatabase/toSocketId"></input>
-        <p>  ' , { 'token':token , 'method' :'</p>
+        <p>socket.emit( ' toMyDatabase ' , { token : 'toKenString' , method : '</p>
         <input type="text" id="method" style="height: 20px;margin-top:10px;margin-left:5px;margin-right:5px;" placeholder="set/push/pull/addToSet"></input>
-        <p>' , 'data': '</p>  
+        <p>' , data: '</p>  
         <input type="text" id="objectdata" style="height: 20px;margin-top:10px;margin-left:5px;margin-right:5px;" placeholder= '{"led1":"on"}'></input>
         <p>' } );</p>
-        <button onclick="send()" style="height: 30px;margin-top:10px;margin-left:5px;margin-right:5px;">EMIT</button>
+        <button onclick="toMyDatabase()" style="height: 30px;margin-top:10px;margin-left:5px;margin-right:5px;">EMIT</button>
+    </div>
+    <div style="display:flex;">
+        <p>socket.emit( ' toSocketId ' , { socketId:</p>
+        <input type="text" id="socketId" style="height: 20px;margin-top:10px;margin-left:5px;margin-right:5px;" placeholder="the socketId you got above"></input>
+        <p>' , message: '</p>  
+        <input type="text" id="messageToSend" style="height: 20px;margin-top:10px;margin-left:5px;margin-right:5px;" placeholder= 'SomeMessage'></input>
+        <p>' } );</p>
+        <button onclick="toSocketId()" style="height: 30px;margin-top:10px;margin-left:5px;margin-right:5px;">EMIT</button>
     </div>
     
     <p>Login with username: admin , password: admin to <a href="https://database-app.onrender.com/lightbulb/">test the
@@ -90,17 +87,26 @@
         // Append nested HTML elements to the container div
         var jsonDiv = document.getElementById("json-data");
         var jsonDiv_devices = document.getElementById("json-data-devices");
-        function send() {
-            let command = document.getElementById('command').value;
+        function toMyDatabase() {
+            
             let objectData = document.getElementById('objectdata').value;
             let method =document.getElementById('method').value;
             // objectData=JSON.parse(objectData);
             
-            socket.emit(command, {
+            socket.emit('toMyDatabase', {
                 token: token,
                 method: method,
                 data: objectData
             });
+        };
+        function toSocketId(){
+            let socketId=document.getElementById('socketId').value;
+            let messageToSend=document.getElementById('messageToSend').value;
+            socket.emit('toSocketId', {
+                socketId: socketId,
+                message: messageToSend
+            });
+
         };
 
         if (token != null) {

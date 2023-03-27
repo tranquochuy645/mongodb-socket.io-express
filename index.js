@@ -37,10 +37,15 @@ async function run() {
     io.on('connection',
         (socket) => {
             console.log('New socket connection!!');
-            socket.on('toSocketId', message => {
+            socket.on('toSocketId', e => {
 
-                var messageSplit = message.body.split(",");
-                io.to(messageSplit[0]).emit('remote', messageSplit[1]);
+                try{
+                    io.to(e.socketId).emit('remote',e.message);
+                }catch (err){
+                    console.log(err)
+                    socket.emit('status',err);
+                };
+                
 
 
                 // console.log(message);
@@ -62,8 +67,8 @@ async function run() {
                         //remove the id from devices when disconnect
                     }
                     )
-                } catch (e) {
-                    console.log(e)
+                } catch (err) {
+                    console.log(err)
                     socket.emit('status', 'Failed to parse Json object')
                 }
 
