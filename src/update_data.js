@@ -2,9 +2,9 @@ const { new_database_connection, close_database_connection } = require('./databa
 const ObjectId = require('mongodb').ObjectId;
 async function update_user_database(id, objectData) {
     try {
-        const mongo_connection = await new_database_connection();
+        
         var o_id = new ObjectId(id);
-        mongo_connection
+        global.mongo_connection
             .db('database-app')
             .collection('user_database')
             .updateOne(
@@ -23,10 +23,10 @@ async function update_user_database(id, objectData) {
 };
 async function update_user(id, objectData,method='set') {
     try {
-        const mongo_connection = await new_database_connection();
+        
         var o_id = new ObjectId(id);
         if(method=='set'){
-            mongo_connection
+            global.mongo_connection
             .db('database-app')
             .collection('users')
             .updateOne(
@@ -37,7 +37,7 @@ async function update_user(id, objectData,method='set') {
             );
         };
         if(method=='push'){
-            mongo_connection
+            global.mongo_connection
             .db('database-app')
             .collection('users')
             .updateOne(
@@ -48,7 +48,7 @@ async function update_user(id, objectData,method='set') {
             );
         };
         if(method=='addToSet'){
-            mongo_connection
+            global.mongo_connection
             .db('database-app')
             .collection('users')
             .updateOne(
@@ -59,7 +59,7 @@ async function update_user(id, objectData,method='set') {
             );
         };
         if(method=='pull'){
-            mongo_connection
+            global.mongo_connection
             .db('database-app')
             .collection('users')
             .updateOne(

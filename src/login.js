@@ -12,10 +12,10 @@ async function login(req, res) {
         return res.status(400).json({ error: 'Invalid content-type' });
     };
     try{
-    const mongo_connection = await new_database_connection();
+   
     const username = req.body.username;
     const password = req.body.password;
-    const db = mongo_connection.db('database-app');
+    const db = global.mongo_connection.db('database-app');
     db.collection('users').findOne({
         'username': username,
         'password': password
@@ -32,12 +32,12 @@ async function login(req, res) {
 
                 res.status(200).send(token);
 
-                close_database_connection(mongo_connection);
+                // close_database_connection(mongo_connection);
 
 
                 global.valid_token.push(token);
                 global.valid_token = removeDuplicates(global.valid_token);
-                console.log(global.valid_token);
+                // console.log(global.valid_token);
 
 
 
@@ -45,7 +45,7 @@ async function login(req, res) {
                 // Invalid username/password
                 console.log(`Invalid username/password for user "${username}"`);
                 res.status(401).send('Invalid username/password');
-                close_database_connection(mongo_connection);
+                // close_database_connection(mongo_connection);
             };
             // console.log(token);
 
@@ -54,9 +54,10 @@ async function login(req, res) {
         .catch(error => {
             console.error(error);
             res.status(500).send('Error logging in');
-            close_database_connection(mongo_connection);
+            // close_database_connection(mongo_connection);
         });
-    }catch (errror){
+    }catch (error){
+        console.log(error);
         return res.status(400).json({ error: 'Malformed JSON' });
 
     }
@@ -77,7 +78,7 @@ async function logout(req, res) {
         const delete_token = req.headers.token;
         removeValueFromArray(global.valid_token, delete_token);
         
-        console.log(global.valid_token);
+        // console.log(global.valid_token);
         res.status(200).send('Logged out');
     } catch (error) {
         return res.status(400).json({ error: 'Malformed JSON' });

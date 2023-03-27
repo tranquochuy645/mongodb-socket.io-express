@@ -1,4 +1,3 @@
-const {new_database_connection,close_database_connection}=require('./database_connection.js');
 const ObjectId=require('mongodb').ObjectId;
 async function get_devices(req, res) {
 
@@ -15,9 +14,9 @@ async function get_devices(req, res) {
             global.valid_token.forEach( async (item) => {
                 if (item == token) {
                     //write a function to find the actual data to send istead of this =)))
-                    const mongo_connection =await new_database_connection();
+                    
                     var o_id = new ObjectId(token);
-                    mongo_connection
+                    global.mongo_connection
                     .db('database-app')
                     .collection('users')
                     .findOne(
@@ -27,7 +26,7 @@ async function get_devices(req, res) {
                         result=>{
                             res.send(result.devices);
                             // console.log(result);
-                            close_database_connection(mongo_connection);
+                            // close_database_connection(mongo_connection);
                         }
                     );
                     
