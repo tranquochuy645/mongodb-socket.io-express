@@ -31,7 +31,7 @@ async function update_user_database(id, objectData, method = 'set') {
                 .db('database-app')
                 .collection('user_database')
                 .updateOne(
-                    { databaseId: o_id },
+                    {  _id: o_id },
                     {
                         $addToSet: objectData
                     }
@@ -42,7 +42,7 @@ async function update_user_database(id, objectData, method = 'set') {
                 .db('database-app')
                 .collection('user_database')
                 .updateOne(
-                    { databaseId: o_id },
+                    {  _id: o_id },
                     {
                         $pull: objectData
                     }
