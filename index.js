@@ -1,5 +1,5 @@
 require('dotenv').config();
-const fs = require("fs");
+
 const bodyParser = require('body-parser');
 
 const port = process.env.PORT;
