@@ -17,16 +17,23 @@
     <p>First text input: Type "toMyDatabase" or "toSocketId" </p>
     <p> "toMyDatabase" ===> update a child.value in your database</p>
     <p> "toSocketId" ===> emit a message to ONE specific socketId</p>
-    <input type="text" id="command"></input>
+    
     <p>Second text input:</p>
     <p>"toMyDatabase" ===> input jsondata string</p>
     <p>For example: {"led1":"on"} </p>
     <p>"toSocketId" ===> input a deviceId and your message , separated by "," </p>
     <p>For example: salfhli238y98whsaf , someMessage</p>
-
-    <input type="text" id="objectdata"></input>
-    <button onclick="send()">send</button>
-
+    <div style="display:flex;">
+        <p>socket.emit( '</p>
+        <input type="text" id="command" style="height: 20px;margin-top:10px;margin-left:5px;margin-right:5px;" placeholder="toMyDatabase/toSocketId"></input>
+        <p>  ' , { 'token':token , 'method' :'</p>
+        <input type="text" id="method" style="height: 20px;margin-top:10px;margin-left:5px;margin-right:5px;" placeholder="set/push/pull/addToSet"></input>
+        <p>' , 'data': '</p>  
+        <input type="text" id="objectdata" style="height: 20px;margin-top:10px;margin-left:5px;margin-right:5px;" placeholder="{'led1':'on'}"></input>
+        <p>' } );</p>
+        <button onclick="send()" style="height: 30px;margin-top:10px;margin-left:5px;margin-right:5px;">EMIT</button>
+    </div>
+    
     <p>Login with username: admin , password: admin to <a href="https://database-app.onrender.com/lightbulb/">test the
             lightbulb example here</a></p>
     <a href="https://database-app.onrender.com/doc/">More document here</a>
@@ -86,9 +93,12 @@
         function send() {
             let command = document.getElementById('command').value;
             let objectData = document.getElementById('objectdata').value;
+            let method =document.getElementById('method').value;
             // objectData=JSON.parse(objectData);
+            
             socket.emit(command, {
-                id: token,
+                token: token,
+                method: method,
                 data: objectData
             });
         };

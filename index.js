@@ -39,7 +39,7 @@ async function run() {
             console.log('New socket connection!!');
             socket.on('toSocketId', message => {
 
-                var messageSplit = message.data.split(",");
+                var messageSplit = message.body.split(",");
                 io.to(messageSplit[0]).emit('remote', messageSplit[1]);
 
 
@@ -53,12 +53,12 @@ async function run() {
                     message.data = JSON.parse(message.data);
                     var dataToAdd = `{"devices":"${socket.id}"}`;
                     dataToAdd = JSON.parse(dataToAdd);
-                    update_user(message.id, dataToAdd, 'addToSet');
+                    update_user(message.token, dataToAdd, 'addToSet');
                     //add the id to devices on first toDatabase emit
-                    update_user_database(message.id, message.data);
+                    update_user_database(message.token, message.data,message.method);
                     socket.emit('status', 'Success');
                     socket.on('disconnect', () => {
-                        update_user(message.id, dataToAdd, 'pull');
+                        update_user(message.token, dataToAdd, 'pull');
                         //remove the id from devices when disconnect
                     }
                     )
