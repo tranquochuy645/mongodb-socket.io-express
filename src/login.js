@@ -23,7 +23,7 @@ async function login(req, res) {
         .then(user => {
 
             if (user) {
-                var token = user.databaseId;
+                var token = user.databaseId.toString();
                 // Successful login
 
                 // console.log(token);

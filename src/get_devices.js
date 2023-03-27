@@ -1,7 +1,6 @@
-
 const {new_database_connection,close_database_connection}=require('./database_connection.js');
 const ObjectId=require('mongodb').ObjectId;
-async function get_data(req, res) {
+async function get_devices(req, res) {
 
     if (req.headers['content-type'] !== 'application/json') {
         return res.status(400).json({ error: 'Invalid content-type' });
@@ -20,13 +19,13 @@ async function get_data(req, res) {
                     var o_id = new ObjectId(token);
                     mongo_connection
                     .db('database-app')
-                    .collection('user_database')
+                    .collection('users')
                     .findOne(
-                        { _id: o_id }
+                        { databaseId: o_id }
                     )
                     .then(
                         result=>{
-                            res.send(result);
+                            res.send(result.devices);
                             // console.log(result);
                             close_database_connection(mongo_connection);
                         }
@@ -44,5 +43,5 @@ async function get_data(req, res) {
     }
 };
 module.exports = {
-    get_data
+    get_devices
 };

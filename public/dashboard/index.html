@@ -10,36 +10,124 @@
 
 <body>
     <button onclick='logout()'>Logout</button>
-    <div id="user_data"></div>
+    <h1>Your data:</h1>
+    <div id="json-data"></div>
+    <h1>Your online devices:</h1>
+    <div id="json-data-devices"></div>
+    <input type="text" id="command"></input>
+    <input type="text" id="objectdata"></input>
+    <button onclick="send()">send</button>
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+        integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
+        crossorigin="anonymous"></script>
     <script>
+        const socket = io('http://localhost:8080');
+        socket.on('status',
+            message => {
+
+                alert(message);
+
+            }
+        );
+        socket.on('remote',message=>{
+            alert(message);
+        })
         let token = null;
         const searchParams = new URLSearchParams(window.location.search);
         token = searchParams.get('token');
         // console.log(token);
+        function createHtmlElement(data) {
+            var elementType = typeof data;
+            var element;
+
+            if (elementType === "object" && Array.isArray(data)) {
+                element = document.createElement("ul");
+                for (var i = 0; i < data.length; i++) {
+                    var listItem = document.createElement("li");
+                    listItem.appendChild(createHtmlElement(data[i]));
+                    element.appendChild(listItem);
+                }
+            } else if (elementType === "object" && data !== null) {
+                element = document.createElement("ul");
+                for (var key in data) {
+                    var listItem = document.createElement("li");
+                    var keyElement = document.createElement("span");
+                    keyElement.appendChild(document.createTextNode(key + ": "));
+                    listItem.appendChild(keyElement);
+                    listItem.appendChild(createHtmlElement(data[key]));
+                    element.appendChild(listItem);
+                }
+            } else {
+                element = document.createTextNode(data);
+            }
+
+            return element;
+        }
+
+
+
+        // Append nested HTML elements to the container div
+        var jsonDiv = document.getElementById("json-data");
+        var jsonDiv_devices = document.getElementById("json-data-devices");
+        function send() {
+            let command = document.getElementById('command').value;
+            let objectData = document.getElementById('objectdata').value;
+            // objectData=JSON.parse(objectData);
+            socket.emit(command, {
+                id: token,
+                data: objectData
+            });
+        };
 
         if (token != null) {
-            fetch('/api/get_data',
-                {
-                    method: 'GET',
+            function load_data() {
+                fetch('/api/get_data',
+                    {
+                        method: 'GET',
 
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'token':token
-                    }
-                     // Send form data in request body
-                }).then((response) => {
-                    if (response.ok) {
-                        response.json().then(data => {
-                            console.log(data);
-                            var stringggg =JSON.stringify(data,null,2);
-                            // let node = document.createElement("node");
-                            document.getElementById('user_data').innerHTML = stringggg;
-                        });
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'token': token
+                        }
 
-                    } else (
-                        alert(response.status)
-                    )
-                });
+                    }).then((response) => {
+                        if (response.ok) {
+                            response.json().then(jsonData => {
+                                // console.log(jsonData);
+                                jsonDiv.innerHTML = '';
+                                jsonDiv.appendChild(createHtmlElement(jsonData));
+
+                            });
+
+                        } else (
+                            alert(response.status)
+                        )
+                    });
+                fetch('/api/get_devices',
+                    {
+                        method: 'GET',
+
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'token': token
+                        }
+
+                    }).then((response) => {
+                        if (response.ok) {
+                            response.json().then(jsonData => {
+                                // console.log(jsonData);
+                                jsonDiv_devices.innerHTML = '';
+                                jsonDiv_devices.appendChild(createHtmlElement(jsonData));
+                                // setTimeout(load_data, 1000);
+                            });
+
+                        } else (
+                            alert(response.status)
+                        )
+                    });
+                setTimeout(load_data, 1000);
+            };
+            load_data();
             function logout() {
                 console.log(token);
 
@@ -48,12 +136,12 @@
                         method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json',
-                            'token':token
+                            'token': token
                         }
                         // Send form data in request body
                     }).then((response) => {
                         if (response.ok) {
-                            
+
                             alert(response.status);
                             location.href = '/login';
 
@@ -64,7 +152,7 @@
             }
         };
     </script>
-    
+
 </body>
 
 </html>

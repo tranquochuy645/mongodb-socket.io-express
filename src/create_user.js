@@ -1,6 +1,6 @@
 const { new_database_connection, close_database_connection } = require('./database_connection.js');
 
-async function route_create_user(req, res) {
+async function create_user(req, res) {
     if (req.headers['content-type'] !== 'application/json') {
         return res.status(400).json({ error: 'Invalid content-type' });
     };
@@ -47,7 +47,8 @@ async function route_create_user(req, res) {
                                         {
                                             username: username,
                                             password: password,
-                                            databaseId: databaseId
+                                            databaseId: databaseId,
+                                            devices:[],
                                         }
                                     )
                                         .then(
@@ -86,5 +87,5 @@ async function route_create_user(req, res) {
 
 
 module.exports = {
-    route_create_user
+    create_user
 };
