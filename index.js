@@ -37,7 +37,7 @@ async function run() {
     io.on('connection',
         (socket) => {
             console.log('New socket connection!!');
-            socket.on('toMyDevice', message => {
+            socket.on('toSocketId', message => {
 
                 var messageSplit = message.data.split(",");
                 io.to(messageSplit[0]).emit('remote', messageSplit[1]);
@@ -46,7 +46,7 @@ async function run() {
                 // console.log(message);
                 //emit message to device
             });
-            socket.on('toDatabase', message => {
+            socket.on('toMyDatabase', message => {
                 // console.log(message)
                 try {
 

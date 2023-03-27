@@ -16,8 +16,13 @@
 
         <button type="submit">Login</button>
     </form>
+
+    
     <button onclick="location.href='/register';">Don't have an account? Register here</button>
 
+
+    <p>~$ curl -X POST -H "Content-Type: application/json" -d '{"username":"test_user","password":"test_password"}' https://database-app.onrender.com/api/login/ -w "\nResponse Code: %{http_code}\nResponse Body: %{response_body}\n"
+    </p>
     <script>
         const loginForm = document.querySelector('#login-form');
 

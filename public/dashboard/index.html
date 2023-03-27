@@ -14,9 +14,22 @@
     <div id="json-data"></div>
     <h1>Your online devices:</h1>
     <div id="json-data-devices"></div>
+    <p>First text input: Type "toMyDatabase" or "toSocketId" </p>
+    <p> "toMyDatabase" ===> update a child.value in your database</p>
+    <p> "toSocketId" ===> emit a message to one socketId or an array of socketIds</p>
     <input type="text" id="command"></input>
+    <p>Second text input:</p>
+    <p>"toMyDatabase" ===> input jsondata string</p>
+    <p>For example: {"led1":"on"} </p>
+    <p>"toSocketId" ===> input a deviceId and your message , separated by "," </p>
+    <p>For example: salfhli238y98whsaf , someMessage</p>
+
     <input type="text" id="objectdata"></input>
     <button onclick="send()">send</button>
+
+    <p>Login with username: admin , password: admin to <a href="https://database-app.onrender.com/lightbulb/">test the
+            lightbulb example here</a></p>
+    
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
         integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
         crossorigin="anonymous"></script>
@@ -29,7 +42,7 @@
 
             }
         );
-        socket.on('remote',message=>{
+        socket.on('remote', message => {
             alert(message);
         })
         let token = null;
