@@ -25,6 +25,7 @@ const { get_devices } = require('./src/get_devices.js');
 const { create_user } = require('./src/create_user.js');
 const { login, logout } = require('./src/login.js');
 const { get_data } = require('./src/get_data.js');
+global.mongo_err;
 async function run() {
     global.mongo_connection = await new_database_connection();
     app.use(express.static('public'));
@@ -38,14 +39,15 @@ async function run() {
         (socket) => {
             console.log('New socket connection!!');
             socket.on('toSocketId', e => {
+                console.log('tosocket');
 
-                try{
-                    io.to(e.socketId).emit('remote',e.message);
-                }catch (err){
+                try {
+                    io.to(e.socketId).emit('remote', e.message);
+                } catch (err) {
                     console.log(err)
-                    socket.emit('status',err);
+                    socket.emit('status', err);
                 };
-                
+
 
 
                 // console.log(message);
@@ -58,20 +60,27 @@ async function run() {
                     message.data = JSON.parse(message.data);
                     var dataToAdd = `{"devices":"${socket.id}"}`;
                     dataToAdd = JSON.parse(dataToAdd);
-                    update_user(message.token, dataToAdd, 'addToSet');
-                    console.log('bug here');
-                    //add the id to devices on first toMyDatabase emit
-                    update_user_database(message.token, message.data , message.method);
-                    socket.emit('status', 'Success');
-                    socket.on('disconnect', () => {
-                        update_user(message.token, dataToAdd, 'pull');
-                        //remove the id from devices when disconnect
-                    }
-                    );
                 } catch (err) {
                     console.log(err)
                     socket.emit('status', 'Failed to parse Json object')
+                };
+
+                update_user(message.token, dataToAdd, 'addToSet');
+
+                //add the id to devices on first toMyDatabase emit
+
+                update_user_database(message.token, message.data, message.method, socket);
+
+
+
+
+                socket.on('disconnect', () => {
+
+                    update_user(message.token, dataToAdd, 'pull');
+                    //remove the id from devices when disconnect
                 }
+                );
+
 
 
                 //upload message.data to mongodb object that have id equal to message.id

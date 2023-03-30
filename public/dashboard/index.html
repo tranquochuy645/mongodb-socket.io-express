@@ -10,37 +10,51 @@
 
 <body>
     <button onclick='logout()'>Logout</button>
-    <h1>Your data:</h1>
-    <div id="json-data"></div>
-    <h1>Your online devices:</h1>
-    <div id="json-data-devices"></div>
     <div style="display:flex;">
-        <p>socket.emit( ' toMyDatabase ' , { token : 'toKenString' , method : '</p>
-        <input type="text" id="method" style="height: 20px;margin-top:10px;margin-left:5px;margin-right:5px;" placeholder="set/push/pull/addToSet"></input>
-        <p>' , data: '</p>  
-        <input type="text" id="objectdata" style="height: 20px;margin-top:10px;margin-left:5px;margin-right:5px;" placeholder= '{"led1":"on"}'></input>
+        <div style="width:65%;">
+            <h1>Your data:</h1>
+            <div id="json-data"></div>
+        </div>
+        <div style="width:35%;">
+            <h1>Your online devices:</h1>
+            <div id="json-data-devices"></div>
+        </div>
+    </div>
+
+
+    <div style="display:flex;">
+        <p>socket.emit( ' toMyDatabase ' , { token : 'token' , method : '</p>
+        <input type="text" id="method" style="height: 20px;margin-top:10px;margin-left:5px;margin-right:5px;"
+            placeholder="set/unset/push/pull/addToSet"></input>
+        <p>' , data: '</p>
+        <input type="text" id="objectdata" style="height: 20px;margin-top:10px;margin-left:5px;margin-right:5px;"
+            placeholder='{"led1":"on"}'></input>
         <p>' } );</p>
-        <button onclick="toMyDatabase()" style="height: 30px;margin-top:10px;margin-left:5px;margin-right:5px;">EMIT</button>
+        <button onclick="toMyDatabase()"
+            style="height: 30px;margin-top:10px;margin-left:5px;margin-right:5px;">EMIT</button>
     </div>
     <div style="display:flex;">
         <p>socket.emit( ' toSocketId ' , { socketId:</p>
-        <input type="text" id="socketId" style="height: 20px;margin-top:10px;margin-left:5px;margin-right:5px;" placeholder="the socketId you got above"></input>
-        <p>' , message: '</p>  
-        <input type="text" id="messageToSend" style="height: 20px;margin-top:10px;margin-left:5px;margin-right:5px;" placeholder= 'SomeMessage'></input>
+        <input type="text" id="socketId" style="height: 20px;margin-top:10px;margin-left:5px;margin-right:5px;"
+            placeholder="the socketId you got above"></input>
+        <p>' , message: '</p>
+        <input type="text" id="messageToSend" style="height: 20px;margin-top:10px;margin-left:5px;margin-right:5px;"
+            placeholder='SomeMessage'></input>
         <p>' } );</p>
-        <button onclick="toSocketId()" style="height: 30px;margin-top:10px;margin-left:5px;margin-right:5px;">EMIT</button>
+        <button onclick="toSocketId()"
+            style="height: 30px;margin-top:10px;margin-left:5px;margin-right:5px;">EMIT</button>
     </div>
-    
+
     <p>Login with username: admin , password: admin to <a href="https://database-app.onrender.com/lightbulb/">test the
             lightbulb example here</a></p>
     <a href="https://database-app.onrender.com/doc/">More document here</a>
-    
+
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
         integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
         crossorigin="anonymous"></script>
     <script>
-        // const socket = io(window.location.hostname);
-        const socket=io('http://localhost:8080/');
+        const socket = io("https://database-app.onrender.com/");
+        // const socket = io('http://localhost:8080/');
         socket.on('status',
             message => {
 
@@ -89,20 +103,20 @@
         var jsonDiv = document.getElementById("json-data");
         var jsonDiv_devices = document.getElementById("json-data-devices");
         function toMyDatabase() {
-            
+
             let objectData = document.getElementById('objectdata').value;
-            let method =document.getElementById('method').value;
+            let method = document.getElementById('method').value;
             // objectData=JSON.parse(objectData);
-            
+
             socket.emit('toMyDatabase', {
                 token: token,
                 method: method,
                 data: objectData
             });
         };
-        function toSocketId(){
-            let socketId=document.getElementById('socketId').value;
-            let messageToSend=document.getElementById('messageToSend').value;
+        function toSocketId() {
+            let socketId = document.getElementById('socketId').value;
+            let messageToSend = document.getElementById('messageToSend').value;
             socket.emit('toSocketId', {
                 socketId: socketId,
                 message: messageToSend

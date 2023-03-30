@@ -16,8 +16,8 @@
     </div>
     <script>
         const lightbulb = document.getElementById('lightbulb');
-        // const socket = io(window.location.hostname);
-        const socket=io('http://localhost:8080/');
+        const socket = io("https://database-app.onrender.com/");
+        // const socket=io('http://localhost:8080/');
         
         socket.on("connect", () => {
             const today= new Date;
@@ -31,6 +31,7 @@
         }
         )
         socket.on('remote', message => {
+            console.log(message);
             if (message == 1) { lightbulb.style.backgroundColor = "yellow" }
             else { lightbulb.style.backgroundColor = "grey" }
         }
