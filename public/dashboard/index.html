@@ -23,7 +23,7 @@
 
 
     <div style="display:flex;">
-        <p>socket.emit( ' toMyDatabase ' , { token : 'token' , method : '</p>
+        <p>socket.emit( ' toMyDatabase ' , { token : '<span id="token"></span>' , method : '</p>
         <input type="text" id="method" style="height: 20px;margin-top:10px;margin-left:5px;margin-right:5px;"
             placeholder="set/unset/push/pull/addToSet"></input>
         <p>' , data: '</p>
@@ -68,6 +68,7 @@
         let token = null;
         const searchParams = new URLSearchParams(window.location.search);
         token = searchParams.get('token');
+        document.getElementById('token').innerText=token;
         // console.log(token);
         function createHtmlElement(data) {
             var elementType = typeof data;
