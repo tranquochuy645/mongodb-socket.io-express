@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { MongoClient } = require('mongodb');
+// const authMiddleware=require('./authMiddleware');
 
 const mongo_uri = process.env.MONGO_URI;
 

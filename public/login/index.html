@@ -21,7 +21,7 @@
     <button onclick="location.href='/register';">Don't have an account? Register here</button>
 
     <p>Bash:</p>
-    <p>~$ curl -X POST -H "Content-Type: application/json" -d '{"username":"test_user","password":"test_password"}' https://database-app.onrender.com/api/login/ -w "\nResponse Code: %{http_code}\nResponse Body: %{response_body}\n"
+    <p>~$ curl -X POST -H "Content-Type: application/json" -d '{"username":"test_user","password":"test_password"}' https://database-app.onrender.com/auth/login/ -w "\nResponse Code: %{http_code}\n"
     </p>
     <script>
         const loginForm = document.querySelector('#login-form');
@@ -32,7 +32,7 @@
             const username = loginForm.elements.username.value;
             const password = loginForm.elements.password.value;
 
-            const response = await fetch('/api/login', {
+            const response = await fetch('/auth/login', {
                 method: 'POST',
                 headers: {
 					'Content-Type': 'application/json'

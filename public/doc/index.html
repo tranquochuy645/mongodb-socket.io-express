@@ -22,7 +22,7 @@
         'password': password
         }</p>
     <p>~$ curl -X POST -H "Content-Type: application/json" -d '{"username":"test_user","password":"test_password"}'
-        https://database-app.onrender.com/api/create_user/ -w "\nResponse Code: %{http_code}\n"
+        https://database-app.onrender.com/auth/create_user/ -w "\nResponse Code: %{http_code}\n"
     </p>
     <h2>Login/Get your token</h2>
     <p> HTTP request to "https://database-app.onrender.com/api/login/" </p>
@@ -37,7 +37,7 @@
         }
     </p>
     <p>~$ curl -X POST -H "Content-Type: application/json" -d '{"username":"test_user","password":"test_password"}'
-        https://database-app.onrender.com/api/login/ -w "\nResponse Code: %{http_code}\n"
+        https://database-app.onrender.com/auth/login/ -w "\nResponse Code: %{http_code}\n"
     </p>
     <h2>Get your data</h2>
     <p> HTTP request to "https://database-app.onrender.com/api/get_data/" </p>
@@ -45,21 +45,23 @@
         method: 'GET',
         headers: {
         'Content-Type': 'application/json',
-        'token': yourToken
+        'Authorization': 'Bearer' + token
         }
 
 
 
     </p>
-    <p>~$ curl -X GET -H "Content-Type: application/json" -H "token: 642135fad6d53079497933c3" https://database-app.onrender.com/api/get_data/ -w "\nResponse Code: %{http_code}"</p>
+    <p>~$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer $$$$Token$$$$" https://database-app.onrender.com/api/get_data/ -w "\nResponse Code: %{http_code}"</p>
     <h2>Get your device's socketId</h2>
     <p>HTTP request to "https://database-app.onrender.com/api/get_devices/"</p>
     <p>method: 'GET',
 
         headers: {
         'Content-Type': 'application/json',
-        'token': token
+        'Authorization': 'Bearer' + token
         }</p>
+        <p>~$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer $$$$Token$$$$" https://database-app.onrender.com/api/get_devices/ -w "\nResponse Code: %{http_code}"</p>
+ 
    <a href="https://database-app.onrender.com/dashboard/">Dashboard</a>
 
 

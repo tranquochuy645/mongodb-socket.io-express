@@ -124,7 +124,7 @@
             });
 
         };
-
+        console.log(token);
         if (token != null) {
             function load_data() {
                 fetch('/api/get_data',
@@ -133,7 +133,7 @@
 
                         headers: {
                             'Content-Type': 'application/json',
-                            'token': token
+                            'Authorization': 'Bearer '+ token
                         }
 
                     }).then((response) => {
@@ -155,7 +155,7 @@
 
                         headers: {
                             'Content-Type': 'application/json',
-                            'token': token
+                            'Authorization': 'Bearer '+ token
                         }
 
                     }).then((response) => {
@@ -177,7 +177,7 @@
             function logout() {
                 console.log(token);
 
-                fetch('/api/login',
+                fetch('/auth/login',
                     {
                         method: 'DELETE',
                         headers: {

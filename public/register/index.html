@@ -17,7 +17,7 @@
 	<br>
 	<button onclick="location.href='/login';">Already have an account? Login here.</button>
 	<p>Bash:</p>
-	<p>~$ curl -X POST -H "Content-Type: application/json" -d '{"username":"test_user","password":"test_password"}' https://database-app.onrender.com/api/create_user/ -w "\nResponse Code: %{http_code}\nResponse Body: %{response_body}\n"
+	<p>~$ curl -X POST -H "Content-Type: application/json" -d '{"username":"test_user","password":"test_password"}' https://database-app.onrender.com/auth/create_user/ -w "\nResponse Code: %{http_code}\n"
 	</p>
 	<script>
 		document.getElementById("register-form").addEventListener("submit", function (event) {
@@ -25,7 +25,7 @@
 			const username = document.getElementById('username').value; // Get form data
 			const password = document.getElementById('password').value;
 
-			fetch('/api/create_user', {
+			fetch('/auth/create_user', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'

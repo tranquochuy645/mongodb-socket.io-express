@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+
 const bodyParser = require('body-parser');
 
 const port = process.env.PORT;
@@ -21,19 +22,23 @@ const io = require('socket.io')(server, {
 });
 const { new_database_connection } = require('./src/database_connection.js');
 const { update_user_database, update_user } = require('./src/update_data.js');
-const { get_devices } = require('./src/get_devices.js');
-const { create_user } = require('./src/create_user.js');
-const { login, logout } = require('./src/login.js');
-const { get_data } = require('./src/get_data.js');
-global.mongo_err;
+// const { get_devices } = require('./src/get_devices.js');
+// const { create_user } = require('./src/create_user.js');
+// const { login, logout } = require('./src/login.js');
+// const { get_data } = require('./src/get_data.js');
+const api=require('./routes/api.js');
+const auth=require('./routes/auth.js');
+// global.mongo_err;
 async function run() {
     global.mongo_connection = await new_database_connection();
     app.use(express.static('public'));
-    app.post('/api/create_user', (req, res) => create_user(req, res));
-    app.post('/api/login', (req, res) => login(req, res));
-    app.get('/api/get_data', (req, res) => get_data(req, res));
-    app.get('/api/get_devices', (req, res) => get_devices(req, res));
-    app.delete('/api/login', (req, res) => logout(req, res));
+    // app.post('/api/create_user', (req, res) => create_user(req, res));
+    // app.post('/api/login', (req, res) => login(req, res));
+    // app.get('/api/get_data', (req, res) => get_data(req, res));
+    // app.get('/api/get_devices', (req, res) => get_devices(req, res));
+    // app.delete('/api/login', (req, res) => logout(req, res));
+    app.use("/api",api);
+    app.use("/auth",auth);
 
     io.on('connection',
         (socket) => {
@@ -97,7 +102,7 @@ async function run() {
 
 
 
-global.valid_token = [];
+
 
 
 
