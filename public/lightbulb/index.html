@@ -16,7 +16,8 @@
     </div>
     <script>
         const lightbulb = document.getElementById('lightbulb');
-        const socket = io("https://database-app.onrender.com/");
+        const rootUrl = window.location.protocol + '//' + window.location.host;
+        const socket = io(rootUrl);
         // const socket=io('http://localhost:8080/');
         
         socket.on("connect", () => {

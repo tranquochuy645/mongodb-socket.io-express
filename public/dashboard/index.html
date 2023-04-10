@@ -45,15 +45,20 @@
             style="height: 30px;margin-top:10px;margin-left:5px;margin-right:5px;">EMIT</button>
     </div>
 
-    <p>Login with username: admin , password: admin to <a href="https://database-app.onrender.com/lightbulb/">test the
+    <p>Login with username: admin , password: admin to <a href="../lightbulb">test the
             lightbulb example here</a></p>
-    <a href="https://database-app.onrender.com/doc/">More document here</a>
+    <a href="../doc">More document here</a>
 
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
         integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
         crossorigin="anonymous"></script>
     <script>
-        const socket = io("https://database-app.onrender.com/");
+      
+
+        // Get the root URL (protocol + host)
+        const rootUrl = window.location.protocol + '//' + window.location.host;
+        console.log(rootUrl);
+        const socket = io(rootUrl);
         // const socket = io('http://localhost:8080/');
         socket.on('status',
             message => {
@@ -68,7 +73,7 @@
         let token = null;
         const searchParams = new URLSearchParams(window.location.search);
         token = searchParams.get('token');
-        document.getElementById('token').innerText=token;
+        document.getElementById('token').innerText = token;
         // console.log(token);
         function createHtmlElement(data) {
             var elementType = typeof data;
@@ -133,7 +138,7 @@
 
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': 'Bearer '+ token
+                            'Authorization': 'Bearer ' + token
                         }
 
                     }).then((response) => {
@@ -155,7 +160,7 @@
 
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': 'Bearer '+ token
+                            'Authorization': 'Bearer ' + token
                         }
 
                     }).then((response) => {
