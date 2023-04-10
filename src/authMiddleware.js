@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
     return res.status(401).json({ error: 'Invalid type' });
   }
   const token = req.headers.authorization.split(' ')[1];
-  console.log(token);
+  // console.log(token);
   if (!token) {
     // No token provided
     // console.log("token missing");
