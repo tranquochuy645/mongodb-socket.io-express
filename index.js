@@ -70,11 +70,11 @@ async function run() {
                     socket.emit('status', 'Failed to parse Json object')
                 };
 
-                update_user(message.token, dataToAdd, 'addToSet');
+                update_user(message.databaseId, dataToAdd, 'addToSet');
 
                 //add the id to devices on first toMyDatabase emit
 
-                update_user_database(message.token, message.data, message.method, socket);
+                update_user_database(message.databaseId, message.data, message.method, socket);
 
 
 
