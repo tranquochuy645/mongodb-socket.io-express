@@ -26,8 +26,8 @@ const { update_user_database, update_user } = require('./src/update_data.js');
 // const { create_user } = require('./src/create_user.js');
 // const { login, logout } = require('./src/login.js');
 // const { get_data } = require('./src/get_data.js');
-const api=require('./routes/api.js');
-const auth=require('./routes/auth.js');
+const api = require('./routes/api.js');
+const auth = require('./routes/auth.js');
 // global.mongo_err;
 async function run() {
     global.mongo_connection = await new_database_connection();
@@ -37,8 +37,8 @@ async function run() {
     // app.get('/api/get_data', (req, res) => get_data(req, res));
     // app.get('/api/get_devices', (req, res) => get_devices(req, res));
     // app.delete('/api/login', (req, res) => logout(req, res));
-    app.use("/api",api);
-    app.use("/auth",auth);
+    app.use("/api", api);
+    app.use("/auth", auth);
 
     io.on('connection',
         (socket) => {
@@ -58,8 +58,11 @@ async function run() {
                 // console.log(message);
                 //emit message to device
             });
+            let dvId;
+            let dbId;
             socket.on('toMyDatabase', message => {
                 // console.log(message)
+                
                 try {
 
                     message.data = JSON.parse(message.data);
@@ -75,22 +78,21 @@ async function run() {
                 //add the id to devices on first toMyDatabase emit
 
                 update_user_database(message.databaseId, message.data, message.method, socket);
-
-
-
-
-                socket.on('disconnect', () => {
-
-                    update_user(message.token, dataToAdd, 'pull');
-                    //remove the id from devices when disconnect
-                }
-                );
-
+                dbId = message.databaseId;
+                dvId= dataToAdd;
 
 
                 //upload message.data to mongodb object that have id equal to message.id
             });
 
+
+            socket.on('disconnect', () => {
+                if (dbId && dvId) {
+                    update_user(dbId, dvId, 'pull');
+                }
+                //remove the id from devices when disconnect
+            }
+            );
         }
 
     );
