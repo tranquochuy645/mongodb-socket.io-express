@@ -1,71 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>API GUIDE</title>
 </head>
-
 <body>
     <h1>API GUIDE</h1>
     <h2>Create new user</h2>
-
-    <p>HTTP request to "/auth/create_user/"</p>
-    <p>method: 'POST',
-        headers: {
+<p>HTTP request to "thisIP/auth/create_user/"</p>
+<pre>
+    method: 'POST',
+    headers: {
         'Content-Type': 'application/json'
-        },
-        body: {
+    },
+    body: {
         'username': username,
         'password': password
-        }</p>
-    <p>~$ curl -X POST -H "Content-Type: application/json" -d '{"username":"test_user","password":"test_password"}'
-        /auth/create_user/ -w "\nResponse Code: %{http_code}\n"
-    </p>
-    <h2>Login/Get your token</h2>
-    <p> HTTP request to "/auth/login/" </p>
-    <p>
-        method: 'POST',
-        headers: {
+    }
+</pre>
+<p>Example:</p>
+<pre>~$ curl -X POST -H "Content-Type: application/json" -d '{"username":"test_user","password":"test_password"}'
+    thisIP/auth/create_user/ -w "\nResponse Code: %{http_code}\n"
+</pre>
+
+<h2>Login/Get your token</h2>
+<p>HTTP request to "thisIP/auth/login/"</p>
+<pre>
+    method: 'POST',
+    headers: {
         'Content-Type': 'application/json'
-        },
-        body: {
+    },
+    body: {
         'username': username,
         'password': password
-        }
-    </p>
-    <p>~$ curl -X POST -H "Content-Type: application/json" -d '{"username":"test_user","password":"test_password"}'
-        /auth/login/ -w "\nResponse Code: %{http_code}\n"
-    </p>
-    <h2>Get your data</h2>
-    <p> HTTP request to "/api/get_data/" </p>
-    <p>
-        method: 'GET',
-        headers: {
+    }
+</pre>
+<p>Example:</p>
+<pre>~$ curl -X POST -H "Content-Type: application/json" -d '{"username":"test_user","password":"test_password"}'
+    thisIP/auth/login/ -w "\nResponse Code: %{http_code}\n"
+</pre>
+
+<h2>Get your data</h2>
+<p>HTTP request to "thisIP/api/get_data/"</p>
+<pre>
+    method: 'GET',
+    headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer' + token
-        }
+    }
+</pre>
+<p>Example:</p>
+<pre>~$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer $$$$Token$$$$" thisIP/api/get_data/ -w "\nResponse Code: %{http_code}"</pre>
 
-
-
-    </p>
-    <p>~$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer $$$$Token$$$$" /api/get_data/ -w "\nResponse Code: %{http_code}"</p>
-    <h2>Get your device's socketId</h2>
-    <p>HTTP request to "/api/get_devices/"</p>
-    <p>method: 'GET',
-
-        headers: {
+<h2>Get your device's socketId</h2>
+<p>HTTP request to "thisIP/api/get_devices/"</p>
+<pre>
+    method: 'GET',
+    headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer' + token
-        }</p>
-        <p>~$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer $$$$Token$$$$" /api/get_devices/ -w "\nResponse Code: %{http_code}"</p>
- 
-   <a href="../dashboard">Dashboard</a>
+    }
+</pre>
+<p>Example:</p>
+<pre>~$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer $$$$Token$$$$" thisIP/api/get_devices/ -w "\nResponse Code: %{http_code}"</pre>
 
-
-
-</body>
-
-</html>
+<a href="../dashboard">Dashboard</a>

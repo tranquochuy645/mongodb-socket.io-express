@@ -21,7 +21,7 @@
     <button onclick="location.href='/register';">Don't have an account? Register here</button>
 
     <p>Bash:</p>
-    <p>~$ curl -X POST -H "Content-Type: application/json" -d '{"username":"test_user","password":"test_password"}' https://database-app.onrender.com/auth/login/ -w "\nResponse Code: %{http_code}\n"
+    <p>~$ curl -X POST -H "Content-Type: application/json" -d '{"username":"test_user","password":"test_password"}' thisIP/auth/login/ -w "\nResponse Code: %{http_code}\n"
     </p>
     <script>
         const loginForm = document.querySelector('#login-form');
