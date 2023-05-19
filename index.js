@@ -61,29 +61,50 @@ async function run() {
             let dvId;
             let dbId;
             socket.on('toMyDatabase', message => {
-                // console.log(message)
-                
-                try {
 
-                    message.data = JSON.parse(message.data);
-                    var dataToAdd = `{"devices":"${socket.id}"}`;
-                    dataToAdd = JSON.parse(dataToAdd);
-                } catch (err) {
-                    console.log(err)
-                    socket.emit('status', 'Failed to parse Json object')
-                };
+                new Promise((resolve, reject) => {
+                    if (typeof message.data === 'string') {
+                        try {
+                            message.data = JSON.parse(message.data);
+                            resolve();
+                        } catch (err) {
+                            console.error(err);
+                            socket.emit('status', 'Malformed Json');
+                            reject('Malformed Json');
+                        }
+                    } else {
+                        resolve();
+                    }
+                })
+                    .then(() => {
 
-                update_user(message.databaseId, dataToAdd, 'addToSet');
+                        if (typeof message.data === 'object') {
+                            if (message.timestamp === true) {
+                                Object.keys(message.data).forEach(key => {
+                                    message.data[key].timestamp = Date.now();
+                                });
+                            } else {
+                                Object.keys(message.data).forEach(key => {
+                                    if (message.data[key].hasOwnProperty('timestamp')) {
+                                        delete message.data[key].timestamp;
+                                    }
+                                });
+                            }
+                        }
 
-                //add the id to devices on first toMyDatabase emit
+                        var dataToAdd = `{"devices":"${socket.id}"}`;
+                        dataToAdd = JSON.parse(dataToAdd);
+                        update_user(message.databaseId, dataToAdd, 'addToSet');
+                        update_user_database(message.databaseId, message.data, message.method, socket);
+                        dbId = message.databaseId;
+                        dvId = dataToAdd;
+                    })
+                    .catch(err => {
+                        console.error(err);
 
-                update_user_database(message.databaseId, message.data, message.method, socket);
-                dbId = message.databaseId;
-                dvId= dataToAdd;
-
-
-                //upload message.data to mongodb object that have id equal to message.id
+                    });
             });
+
 
 
             socket.on('disconnect', () => {

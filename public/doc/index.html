@@ -12,7 +12,7 @@
     <h1>API GUIDE</h1>
     <h2>Create new user</h2>
 
-    <p>HTTP request to "https://database-app.onrender.com/api/create_user/"</p>
+    <p>HTTP request to "/auth/create_user/"</p>
     <p>method: 'POST',
         headers: {
         'Content-Type': 'application/json'
@@ -22,10 +22,10 @@
         'password': password
         }</p>
     <p>~$ curl -X POST -H "Content-Type: application/json" -d '{"username":"test_user","password":"test_password"}'
-        https://database-app.onrender.com/auth/create_user/ -w "\nResponse Code: %{http_code}\n"
+        /auth/create_user/ -w "\nResponse Code: %{http_code}\n"
     </p>
     <h2>Login/Get your token</h2>
-    <p> HTTP request to "https://database-app.onrender.com/api/login/" </p>
+    <p> HTTP request to "/auth/login/" </p>
     <p>
         method: 'POST',
         headers: {
@@ -37,10 +37,10 @@
         }
     </p>
     <p>~$ curl -X POST -H "Content-Type: application/json" -d '{"username":"test_user","password":"test_password"}'
-        https://database-app.onrender.com/auth/login/ -w "\nResponse Code: %{http_code}\n"
+        /auth/login/ -w "\nResponse Code: %{http_code}\n"
     </p>
     <h2>Get your data</h2>
-    <p> HTTP request to "https://database-app.onrender.com/api/get_data/" </p>
+    <p> HTTP request to "/api/get_data/" </p>
     <p>
         method: 'GET',
         headers: {
@@ -51,16 +51,16 @@
 
 
     </p>
-    <p>~$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer $$$$Token$$$$" https://database-app.onrender.com/api/get_data/ -w "\nResponse Code: %{http_code}"</p>
+    <p>~$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer $$$$Token$$$$" /api/get_data/ -w "\nResponse Code: %{http_code}"</p>
     <h2>Get your device's socketId</h2>
-    <p>HTTP request to "https://database-app.onrender.com/api/get_devices/"</p>
+    <p>HTTP request to "/api/get_devices/"</p>
     <p>method: 'GET',
 
         headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer' + token
         }</p>
-        <p>~$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer $$$$Token$$$$" https://database-app.onrender.com/api/get_devices/ -w "\nResponse Code: %{http_code}"</p>
+        <p>~$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer $$$$Token$$$$" /api/get_devices/ -w "\nResponse Code: %{http_code}"</p>
  
    <a href="../dashboard">Dashboard</a>
 
