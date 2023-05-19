@@ -59,7 +59,7 @@
 
         // Get the root URL (protocol + host)
         const rootUrl = window.location.protocol + '//' + window.location.host;
-        console.log(rootUrl);
+        // console.log(rootUrl);
         const socket = io(rootUrl);
         // const socket = io('http://localhost:8080/');
         socket.on('status',
@@ -132,8 +132,10 @@
             });
 
         };
-        console.log(token);
+        // console.log(token);
         if (token != null) {
+            let temp_data;
+            let temp_devices;
             function load_data() {
                 fetch('/api/get_data',
                     {
@@ -148,8 +150,12 @@
                         if (response.ok) {
                             response.json().then(jsonData => {
                                 // console.log(jsonData);
-                                jsonDiv.innerHTML = '';
-                                jsonDiv.appendChild(createHtmlElement(jsonData));
+                                if (jsonData !== temp_data) {
+                                    // console.log("reset");
+                                    jsonDiv.innerHTML = '';
+                                    jsonDiv.appendChild(createHtmlElement(jsonData));
+                                    temp_data = jsonData;
+                                }
                                 if (!databaseId) {
                                     try {
                                         let idString = document
@@ -163,7 +169,7 @@
                                             databaseId = match[1];
                                             document.getElementById('databaseId').innerText = databaseId;
                                         }
-                                        console.log(databaseId);
+                                        // console.log(databaseId);
 
                                     } catch (e) {
                                         console.log(e);
@@ -190,8 +196,11 @@
                         if (response.ok) {
                             response.json().then(jsonData => {
                                 // console.log(jsonData);
-                                jsonDiv_devices.innerHTML = '';
-                                jsonDiv_devices.appendChild(createHtmlElement(jsonData));
+                                if (jsonData !== temp_devices) {
+                                    jsonDiv_devices.innerHTML = '';
+                                    jsonDiv_devices.appendChild(createHtmlElement(jsonData));
+                                    temp_devices = jsonData;
+                                }
                                 // setTimeout(load_data, 1000);
                             });
 
@@ -203,7 +212,7 @@
             };
             load_data();
             function logout() {
-                console.log(token);
+                // console.log(token);
 
                 fetch('/auth/login',
                     {
