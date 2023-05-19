@@ -34,7 +34,7 @@ This guide provides information on using the API endpoints provided by the appli
 ### Create a new user
 
 HTTP request: POST to /auth/create_user/
-
+``` 
 json
 
 method: 'POST',
@@ -45,7 +45,7 @@ body: {
     'username': username,
     'password': password
 }
-
+``` 
 Example:
 ``` 
 bash
@@ -55,7 +55,7 @@ bash
 ### Login/Get your token
 
 HTTP request: POST to /auth/login/
-
+``` 
 json
 
 method: 'POST',
@@ -66,7 +66,7 @@ body: {
     'username': username,
     'password': password
 }
-
+``` 
 Example:
 ``` 
 bash
@@ -76,7 +76,7 @@ bash
 ### Get your data
 
 HTTP request: GET to /api/get_data/
-
+``` 
 json
 
 method: 'GET',
@@ -84,7 +84,7 @@ headers: {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer' + token
 }
-
+``` 
 Example:
 ``` 
 bash
@@ -94,7 +94,7 @@ bash
 ### Get your device's socketId
 
 HTTP request: GET to /api/get_devices/
-
+``` 
 json
 
 method: 'GET',
@@ -102,7 +102,7 @@ headers: {
     'Content-Type': 'application/json',
     'Authorization': 'Bearer' + token
 }
-
+``` 
 Example:
 ``` 
 bash
