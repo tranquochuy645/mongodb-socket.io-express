@@ -1,26 +1,26 @@
-###mongodb-socket.io-express
-##Installation
+### mongodb-socket.io-express
+## Installation
 
-#Clone the repository:
+# Clone the repository:
 ``` 
 bash
 
 git clone https://github.com/tranquochuy645/mongodb-socket.io-express
 ``` 
-#Install dependencies:
+# Install dependencies:
 
 ``` 
 bash
 
 npm install
 ``` 
-#Create the .env file:
+# Create the .env file:
 ``` 
 bash
 
 touch .env
 ``` 
-#Add the following environment variables to the .env file:
+# Add the following environment variables to the .env file:
 ``` 
 makefile
 
@@ -28,10 +28,10 @@ MONGO_URI=your_mongodb_uri
 PORT=your_port_number
 JWT_KEY=your_jwt_key
 ``` 
-##API Guide
+## API Guide
 
 This guide provides information on using the API endpoints provided by the application.
-#Create a new user
+# Create a new user
 
 HTTP request: POST to /auth/create_user/
 
@@ -52,7 +52,7 @@ bash
 
 ~$ curl -X POST -H "Content-Type: application/json" -d '{"username":"test_user","password":"test_password"}' /auth/create_user/ -w "\nResponse Code: %{http_code}\n"
 ``` 
-#Login/Get your token
+# Login/Get your token
 
 HTTP request: POST to /auth/login/
 
@@ -73,7 +73,7 @@ bash
 
 ~$ curl -X POST -H "Content-Type: application/json" -d '{"username":"test_user","password":"test_password"}' /auth/login/ -w "\nResponse Code: %{http_code}\n"
 ``` 
-#Get your data
+# Get your data
 
 HTTP request: GET to /api/get_data/
 
@@ -91,7 +91,7 @@ bash
 
 ~$ curl -X GET -H "Content-Type: application/json" -H "Authorization: Bearer $$$$Token$$$$" /api/get_data/ -w "\nResponse Code: %{http_code}"
 ``` 
-#Get your device's socketId
+# Get your device's socketId
 
 HTTP request: GET to /api/get_devices/
 
@@ -113,7 +113,7 @@ For more information and examples, please refer to the Dashboard page.
 
 Note: Replace $$$$Token$$$$ with your actual token.
 
-##SOCKET.IO GUIDE
+## SOCKET.IO GUIDE
 
 Connect to the server using Socket.IO:
 
