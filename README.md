@@ -134,13 +134,13 @@ To handle an event from the server, use the socket.on(eventName, callback) funct
 To send a message to the server, use the socket.emit(eventName, data) function. Provide the event name and the data to be sent.
 Emit a message to the server's 'toMyDatabase' event:
 
-    To send data to the server's 'toMyDatabase' event, use the socket.emit(eventName, data) function.
-    Provide the event name ('toMyDatabase') and the data object containing the required parameters.
-    The data object should include the following properties:
-        message.databaseId: The ID of the database to update.
-        message.data: The data to be sent to the server.
-        message.method: The method for updating the user's data (set/unset/push/pull/addToSet).
-        message.timestamp (optional): Set it to true if you want to include a timestamp in the data.
+   To send data to the server's 'toMyDatabase' event, use the socket.emit(eventName, data) function.
+   Provide the event name ('toMyDatabase') and the data object containing the required parameters.
+   The data object should include the following properties:
+       message.databaseId: The ID of the database to update.
+       message.data: The data to be sent to the server.
+       message.method: The method for updating the user's data (set/unset/push/pull/addToSet).
+       message.timestamp (optional): Set it to true if you want to include a timestamp in the data.
 
 Here's an example of how to emit a message to the server:
 ``` 
@@ -155,9 +155,9 @@ socket.emit('toMyDatabase', {
 ``` 
 Handling server responses and errors:
 
-    To handle server responses or errors, listen for events emitted by the server using socket.on(eventName, callback).
-    In this case, you can listen for the 'status' event to receive status updates or error messages from the server.
-    Here's an example of how to handle the 'status' event:
+   To handle server responses or errors, listen for events emitted by the server using socket.on(eventName, callback).
+   In this case, you can listen for the 'status' event to receive status updates or error messages from the server.
+   Here's an example of how to handle the 'status' event:
     
 ``` 
 javascript
