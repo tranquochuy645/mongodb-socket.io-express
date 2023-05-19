@@ -150,7 +150,7 @@
                         if (response.ok) {
                             response.json().then(jsonData => {
                                 // console.log(jsonData);
-                                if (jsonData !== temp_data) {
+                                if (JSON.stringify(jsonData) !== JSON.stringify(temp_data)) {
                                     // console.log("reset");
                                     jsonDiv.innerHTML = '';
                                     jsonDiv.appendChild(createHtmlElement(jsonData));
@@ -196,7 +196,7 @@
                         if (response.ok) {
                             response.json().then(jsonData => {
                                 // console.log(jsonData);
-                                if (jsonData !== temp_devices) {
+                                if (JSON.stringify(jsonData) !== JSON.stringify(temp_devices)) {
                                     jsonDiv_devices.innerHTML = '';
                                     jsonDiv_devices.appendChild(createHtmlElement(jsonData));
                                     temp_devices = jsonData;
