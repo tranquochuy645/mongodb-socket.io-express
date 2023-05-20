@@ -5,10 +5,15 @@
 #include <ArduinoJson.h>
 #include <WebSocketsClient.h>
 #include <SocketIOclient.h>
+#include "DHT.h"
+
+
 
 WiFiMulti WiFiMulti;
 SocketIOclient socketIO;
-
+#define DHTPIN 14
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
 #define USE_SERIAL Serial
 #define LED 12
 int LED_STATE= 0;
@@ -109,7 +114,7 @@ void setup() {
         delay(1000);
     }
 
-    WiFiMulti.addAP("Den Cafe", "cafe2345678");
+    WiFiMulti.addAP("leuleu", "iuiuhatehate"); // SSID, PASS
 
     while (WiFiMulti.run() != WL_CONNECTED) {
         delay(100);
@@ -133,6 +138,7 @@ unsigned long blinkTimestamp = 0;
 void loop() {
     socketIO.loop();
     
+
     
     uint64_t now = millis();
     if(blink == true && now-blinkTimestamp> 400){
@@ -150,7 +156,15 @@ void loop() {
     }
     if (now - messageTimestamp > 5000) {
         messageTimestamp = now;
-
+        // Reading temperature or humidity takes about 250 milliseconds!
+  // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
+  float h = dht.readHumidity();
+  // Read temperature as Celsius (the default)
+  float t = dht.readTemperature();
+  if (isnan(h) || isnan(t) ) {
+    Serial.println(F("Failed to read from DHT sensor!"));
+    return;
+  }
         // Create JSON message for Socket.IO (event)
         DynamicJsonDocument doc(1024);
         JsonArray array = doc.to<JsonArray>();
@@ -163,8 +177,8 @@ void loop() {
         JsonObject param1 = array.createNestedObject();
         param1["databaseId"] = "642135fad6d53079497933c3";
         param1["method"] = "push";
-        param1["data"]["dht11"]["temp"] = "fake temp";
-        param1["data"]["dht11"]["humi"] = "fake humi";
+        param1["data"]["dht11"]["temp"] = t;
+        param1["data"]["dht11"]["humi"] = h;
         param1["timestamp"] = true;
 
         // JSON to String (serialization)
